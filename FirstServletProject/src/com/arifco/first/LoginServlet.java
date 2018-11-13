@@ -11,6 +11,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(description ="Login Servlet",
 			urlPatterns = {"/LoginServlet"})
@@ -30,6 +31,8 @@ public class LoginServlet extends HttpServlet{
 		log("User "+usr+" password "+pwd);
 		
 		if(userId.equals(usr) && password.equals(pwd)) {
+			HttpSession session = req.getSession();
+			session.setAttribute("user", usr);
 			Cookie loginCookie = new Cookie("user", usr);
 			loginCookie.setMaxAge(30*60);
 			res.addCookie(loginCookie);
